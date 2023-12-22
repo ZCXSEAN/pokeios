@@ -1,38 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:pokeios/app.dart';
+import 'package:pokeios/model/pokemon/pokemon.dart';
 
-void main() {
+void main() async {
+  await Hive.initFlutter();
+
+  var box = await Hive.openBox<Pokemon>('testBox');
+
   runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text('Pokedex-iOS'),
-      ),
-      body: const Center(
-        child: Text('Demo'),
-      ),
-    );
-  }
 }
