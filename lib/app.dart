@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pokeapi/model/pokemon/pokemon.dart';
 import 'package:pokeapi/pokeapi.dart';
+import 'package:pokeios/main.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -23,21 +24,25 @@ class AppView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text('Pokedex-iOS'),
+        title: const Text('Pokedex'),
       ),
-      body: Center(
-        child: GestureDetector(
-          child: const Text('print pokemon',
-                    style: TextStyle(color: Color.fromARGB(255, 23, 84, 226))),
-                onTap: () async {
-                  var pokemon = await PokeAPI.getObject<Pokemon>(1019);
-                  print(pokemon);
-                },
-        ),
+      body: Column(
+        children: [
+          ElevatedButton(
+              onPressed: () async {
+                await pokemonRepository.saveAllPokemonsToHive();
+              },
+              child: Text('Save All Pokemons')),
+          ElevatedButton(
+              onPressed: () {
+                int c = pokemonRepository.count();
+                print('$c');
+              },
+              child: Text('Count')),
+        ],
       ),
     );
   }
